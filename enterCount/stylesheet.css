@@ -1,0 +1,92 @@
+body {
+    width: calc(100vw - 25px);
+    height: 100%;
+    text-align: center;
+}
+
+#pageContainer {
+    height: 100%;
+    width: 100%;
+}
+
+#catMenuHolder #locMenuHolder {
+    position:relative;
+    width:100%;
+    float:left;
+}
+
+.itemFlexContainer {
+    display:flex;
+    display:-webkit-flex;
+    flex-wrap:wrap;
+    -webkit-flex-wrap:wrap;
+    height:auto;
+    justify-content: space-between;
+    overflow:hidden;
+}
+
+.catMenuButton {
+    height: 50px;
+}
+
+input[name='sendCount'] {
+    width: 100%;
+}
+
+input[type="tel"]:focus {
+    outline: none;
+}
+
+#itemArea {
+    font-family: verdana, arial, sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: chartreuse;
+}
+
+.flexContainer {
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: nowrap;
+    -webkit-flex-wrap: nowrap;
+    height: auto;
+    justify-content: space-between;
+    overflow: auto;
+}
+
+.flexItem {
+    flex: 1;
+    -webkit-flex-grow: 1;
+}
+
+.itemWrap {
+    width: 33%;
+    max-width: 200px;
+    height: auto;
+    background-color: royalblue;
+    position: relative;
+    margin: 5px;
+    box-shadow: 0 0 2px white;
+}
+
+#countArea {
+    width: auto;
+    height: 100%;
+}
+
+.areas {
+    width: 100px;
+    max-width: 100px;
+    height: 100px;
+    position: relative;
+    top: 0;
+}
+
+.itemFloat {
+    float: left;
+}
+
+.label {
+    font-size: 12px;
+    max-width: 50px;
+}

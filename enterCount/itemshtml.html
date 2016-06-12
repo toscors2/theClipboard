@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Count Screen</title>
+    <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+    <link href="../inc/stylez.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css"/>
+</head>
+<body>
+<div id="pageContainer" data-role="page" data-theme="b">
+    <div id='countHeader' data-role='header' data-position='fixed' data-tap-toggle='true' class='ui-grid-a'
+         style='height:auto;'>
+        <a href="#" class="ui-block-a ui-corner-all" style="position:relative;">
+            <div id='selectCategoryWrapper'>
+                <h3 class="categoryExpand"> Category</h3>
+            </div>
+        </a>
+        <a href="#" class="ui-block-b ui-corner-all" style="position:relative;">
+            <div id='selectLocationWrapper'>
+                <h3 class="locationExpand">Location</h3>
+
+            </div>
+        </a>
+        <a href="#" class="ui-block-c"><div class=''>
+            <h3>back button</h3>
+        </div></a>
+            <a href="#" class="ui-block-d"><div class=''>
+            <h3>add item</h3>
+        </div></a>
+
+        <div id="catMenuHolder" class="hidden">
+            <h1>Loading</h1>
+        </div>
+        <div id='locMenuHolder' class="hidden">
+            <h1>loading</h1>
+        </div>
+    </div>
+    <div id='countWrap' data-role='main' data-theme='b' style='height:auto;'>
+
+        <div id='countArea'>";
+            <h3>Loading Items....</h3>
+        </div>
+    </div>
+    <div id='footer' data-role='footer' data-tap-toggle='true' data-position='fixed'>
+        <a href='initializeCount.php'>".$count ."</a>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        /* show category menu*/
+        $('#selectCategoryWrapper').on("click", function () {
+            $('#catMenuHolder').removeClass("hidden");
+        });
+
+        /*show location menu*/
+        $('#selectLocationWrapper').on("click", function () {
+            $('#locMenuHolder').removeClass("hidden");
+        });
+
+        /* load category menu*/
+        function loadCatMenu() {
+            var getCatMenu = $.post('categoryMenu.php');
+            getCatMenu.done(function (data) {
+                $('#catMenuHolder').html(data);
+                console.log("successful at loading category menu: ");
+            });
+            getCatMenu.fail(function (data) {
+                console.log("failed at loading menu: " + data);
+            });
+        }
+
+        /* load location menu */
+        function loadLocMenu() {
+            var getLocMenu = $.post('locationMenu.php');
+            getLocMenu.done(function (data) {
+                $('#locMenuHolder').html(data);
+                console.log("successful at loading location menu:  ");
+            });
+            getLocMenu.fail(function (data) {
+                console.log("unsuccessful at loading location menu:  " + data);
+            });
+        }
+
+        /*to change headers*/
+        function changeHeaders() {
+            var changeHeaders = $.post('../inc/cfgGlobal.php', '', null, 'json');
+            changeHeaders.done(function (data) {
+                $('#selectCategoryWrapper').html("<h3 class='categoryExpand'>" + data.category + "</h3>");
+                $('#selectLocationWrapper').html("<h3 class='locationExpand'>" + data.location + "</h3>");
+                console.log("Changed Headers");
+            });
+            changeHeaders.fail(function (data) {
+                console.log("did not change headers" + data)
+            });
+        }
+
+        /*load items*/
+        function loadItems() {
+            changeHeaders();
+            $('#countArea').html("<h1>Loading Items...</h1>");
+            var getItems = $.post('items2.php');
+            getItems.done(function (data) {
+                $('#countArea').html(data);
+                console.log("successful at loading items:  ");
+            });
+            getItems.fail(function (data) {
+                console.log("failed at loading items:  " + data);
+            })
+        }
+
+        loadCatMenu();
+        loadLocMenu();
+        loadItems();
+
+        /*change  category*/
+        $('#catMenuHolder').on("click", "button", function () {
+            $('#catMenuHolder').addClass("hidden");
+            var changeData = {
+                "categoryID": $(this).attr('id'),
+                "category": $(this).text(),
+                "changeCategory": true
+            };
+
+
+            var changecat = $.post('../inc/cfgGlobal.php', changeData, null, 'json');
+            changecat.done(function (data) {
+                console.log("category changed:  " + data);
+
+                loadItems();
+            });
+            changecat.fail(function (data) {
+                console.log("category not changed:  " + data);
+            });
+
+            console.log("category menu button pressed: " + $(this).attr('id') + " : " + $(this).text());
+            /*$('#selectCategoryWrapper').addClass('ui-collapsible-collapsed');*/
+
+        });
+
+        /*change location*/
+        $('#locMenuHolder').on("click", "button", function () {
+            $('#locMenuHolder').addClass("hidden");
+            var changeData = {
+                "locationID": $(this).attr('id'),
+                "location": $(this).text(),
+                "changeLocation": true
+            };
+
+            console.log(changeData);
+            var changeLoc = $.post('../inc/cfgGlobal.php', changeData, null, 'json');
+            changeLoc.done(function (data) {
+                console.log("location changed:  " + data);
+            });
+            changeLoc.fail(function (data) {
+                console.log("location not changed:  " + data);
+            });
+            changeLoc.always(function () {
+
+            });
+            console.log("location menu button pressed: " + $(this).attr('id') + " : " + $(this).text());
+            changeHeaders();
+
+        });
+
+    });
+
+</script>
+
+</body>
+
+</html>

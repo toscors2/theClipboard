@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>theClipboard: Count</title>
+    <link rel="stylesheet" href="../inc/stylez.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css"/>
+</head>
+<body>
+<div id="container">
+<div data-role="page" data-theme="b" id="countStartedPage">
+
+    <div data-role="header" data-position="fixed" class="ui-grid-c">
+        <div class="ui-block-a">
+            <a href="#categoryMenu" data-rel="popup" data-transition="slidedown"
+               class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-gear ui-btn-icon-left ui-btn-a">category</a>
+            <div id="loadCatMenuHere">
+                <!--<div id="categoryMenu" data-role="popup" data-theme="b">
+                <p>is it working</p>
+                </div>-->
+            </div>
+        </div>
+        <div class="ui-block-b">
+            <p>location menu</p>
+        </div>
+        <div class="ui-block-c">
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-gear ui-btn-icon-left ui-btn-a">Go Back</a>
+        </div>
+        <div class="ui-block-d">
+            <p>validate counts</p>
+        </div>
+    </div>
+    <div data-role="main" id="countPageContent">
+        <h3> content goes here</h3>
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <p class="centerText">copyright 2016 tosco(rs)2 all rights reserved</p>
+    </div>
+</div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+<!--
+<script src="countJS.js"></script>
+-->
+
+<script>
+    $(document).ready(function(){
+        console.log("page 2 loaded");
+        getCategoryMenu();
+        function getCategoryMenu() {
+            var getCatMenu = $.post('categoryMenu.php');
+            getCatMenu.done(function (data) {
+                console.log("received cat menu #categoryMenu.html: " + $('#categoryMenu').html());
+                $('#loadCatMenuHere').html(data);
+                console.log("#category menu data:  " + data);
+            });
+            getCatMenu.fail(function (data) {
+                console.log("failed at getting cat menu:");
+            });
+
+        }
+    });
+
+</script>
+
+</body>
+</html>

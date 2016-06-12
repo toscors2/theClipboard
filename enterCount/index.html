@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>theClipboard: Count</title>
+    <link rel="stylesheet" href="../inc/stylez.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css"/>
+</head>
+<body>
+
+<div data-role='page' id='startCountPage' class="ui-corner-all" data-theme="b">
+
+        <div data-role="header" id="header" class="ui-corner-all" data-position="fixed">
+        <h3>Start Your Count</h3>
+        </div>
+        <div data-role="main" class="ui-corner-all centerText">
+            <div id="startPageContent"><h3>Getting Initializing Information</h3></div>
+            <a href='#' id='initCount' class='ui-btn ui-corner-all ui-btn-inline'>Initialize Count</a>
+        </div>
+        <div data-role="footer" id="footer" class="ui-corner-all" data-position="fixed">
+
+        <p class="centerText">copyright 2016 toscors2 all rights reserved</p>
+        </div>
+    </div>
+
+
+<!--<div data-role="page" data-theme="b" id="countStartedPage">
+
+    <div data-role="header" data-position="fixed" class="ui-grid-c">
+        <div class="ui-block-a">
+            <a href="#categoryMenu" data-rel="popup" data-transition="slidedown"
+               class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-gear ui-btn-icon-left ui-btn-a">category</a>
+            <div data-role="popup" id="categoryMenu" data-theme="b">
+                <p> is this working now</p>
+            </div>
+        </div>
+        <div class="ui-block-b">
+            <p>location menu</p>
+        </div>
+        <div class="ui-block-c">
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-gear ui-btn-icon-left ui-btn-a">Go Back</a>
+        </div>
+        <div class="ui-block-d">
+            <p>validate counts</p>
+        </div>
+    </div>
+    <div data-role="main" id="countPageContent">
+        <h3> content goes here</h3>
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <p class="centerText">copyright 2016 tosco(rs)2 all rights reserved</p>
+    </div>
+</div>-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+    /*loads initialize count menu*/
+    $('#startPageContent').load('initializeCount.php');
+
+    /*submit initialize count form*/
+    $("body").on("click", '#initCount', function (event) {
+        event.preventDefault();
+        console.log("after clicking initialize before getCategoryMenu function:  " + $('#categoryMenu').html());
+        initializeSession();
+        console.log("after clicking initialize after getCategoryMenu function:  " + $('#categoryMenu').html());
+        /*$('#startCountPage').hide();
+         $('#countStartedPage').show();*/
+    });
+
+    /*initialize session variables*/
+    function initializeSession() {
+        var formData = {
+            'currDate': $('#dateSel').val(),
+            'categoryID': $('#categorySel').val(),
+            'locationID': $('#locationSel').val(),
+            'initializeCount': true
+        };
+        var url = '../inc/cfgGlobal.php';
+        var initialize = $.post(url, formData);
+        initialize.done(function (data) {
+            console.log('set initial session values'+ $('#categoryMenu').html());
+            window.location.href = 'itemshtml.html';
+        });
+        initialize.fail(function (data) {
+            console.log("failed initialized session:  ");
+        });
+    }
+
+})
+</script>
+</body>
+</html>

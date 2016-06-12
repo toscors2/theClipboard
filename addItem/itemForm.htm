@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<?php include ("connect.php"); ?>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html" />
+	<meta name="author" content="" />
+
+	<title>Untitled 3</title>
+</head>
+
+<body>
+
+<?php
+
+$sql = "select * from category";
+$res = mysqi_query($conn, $sql);
+var_dump($res);
+
+?>
+
+<table><form name='addItem' method='POST' action='addItem.php'>
+<tr><td>Item Number:</td><td><input type='text' name='itemNum'></input></td></tr>
+<tr><td>Item Name:</td><td><input type='text' name='itemName'></input></td></tr>
+<tr><td>Flavor:</td><td><input type='text' name='flavor'></input></td></tr>
+<tr><td>Pack Size:</td><td><input type='text' name ='pack'></input></td></tr>
+</form>
+</table>
+
+</body>
+</html>
